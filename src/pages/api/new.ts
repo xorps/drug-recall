@@ -4,6 +4,7 @@ import * as s from '../../zapatos/schema';
 // import pool from '../../pgPool';
 import NewRecall from '../../types/NewRecall';
 import Store from '../../types/Store';
+import moment from 'moment';
 
 type ValidationSuccess = {
     success: true;
@@ -32,6 +33,7 @@ function ValidDate(value: unknown): [boolean, string] {
     const invalidString = "invalid format. expects (mm/dd/yyyy)";
     if (isString(value)) {
         if (value.length < 0) return [false, "required"];
+        /*
         try {
             const options = {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Los_Angeles'};
             const dated = new Intl.DateTimeFormat('en-US', options).format(new Date(value));
@@ -39,6 +41,8 @@ function ValidDate(value: unknown): [boolean, string] {
         } catch {
             return [false, invalidString];
         }
+        */
+       return [moment(value, "MM/DD/YYYY", true).isValid(), invalidString];
     } else {
         return [false, invalidString];
     }

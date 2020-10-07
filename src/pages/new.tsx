@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Layout from '../components/layout';
 import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import React from 'react';
@@ -59,6 +60,7 @@ function SelectInput<Key extends keyof NewRecall>({error, label, name, options}:
 }
 
 export default function New() {
+    const router = useRouter();
     const [state, setState] = React.useState<State>({status: Idle, errors: {}});
 
     async function onSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
@@ -72,6 +74,7 @@ export default function New() {
         }).then(r => r.json());
         if (resp.success) {
             setState({status: Idle, errors: {}});
+            router.push('/');
         } else {
             setState({status: Idle, errors: resp.errors});
         }
