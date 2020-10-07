@@ -1,0 +1,15 @@
+{
+    "db": {
+      "connectionString": "postgresql://postgres:password@localhost/recall"
+    },
+    "outDir": "./src",
+    "srcMode": "copy",
+    "progressListener": false,
+    "warningListener": true,
+    "schemas": {
+      "public": {
+        "include": "*",
+        "exclude": []
+      }
+    }
+  }
