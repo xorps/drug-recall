@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import * as db from '../../zapatos/src';
 import * as s from '../../zapatos/schema';
-import pool from '../../pgPool';
+// import pool from '../../pgPool';
 import NewRecall from '../../types/NewRecall';
-import { cachedDataVersionTag } from 'v8';
+import Store from '../../types/Store';
 
 type ValidationSuccess = {
     success: true;
@@ -105,11 +105,11 @@ function validate(form: unknown): ValidationResult {
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (req.method === 'POST') {
         const form = req.body;
-        console.log(form);
         const result = validate(form);
         if (result.success) {
             const newRecall = result.value;
-            const db_result = await db.insert("recall", newRecall).run(pool);
+            // const db_result = await db.insert("recall", newRecall).run(pool);
+            Store.push(newRecall);
             res.statusCode = 200;
             res.json({success: true});
         } else {
