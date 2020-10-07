@@ -55,7 +55,7 @@ function Home() {
 
     React.useEffect(() => {
         fetchUsers();
-    });
+    }, []);
 
     return <Layout>
         <Content state={state} />
