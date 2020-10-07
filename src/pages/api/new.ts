@@ -93,19 +93,10 @@ class Chain<T, R> {
     type_check<U extends R>() { return undefined; }
 }
 
-function type_check<A, B>() {
-    let a: Record<keyof A, string> = {} as Record<keyof A, string>;
-    let b: Record<keyof B, string> = {} as Record<keyof B, string>;
-    a = b;
-    return undefined;
-}
-
 function validate(form: unknown): ValidationResult {
     const errors: Partial<Record<keyof NewRecall, string>> = {};
     const chain: Chain<keyof NewRecall, Record<keyof NewRecall, unknown>> = new EmptyChain()
         .add("date").add("drug").add("mfgr").add("lot").add("stocked").add("affected").add("date_removed").add("initials");
-    const ignored: Record<keyof NewRecall, unknown> = chain.unwrap_R();
-    chain.type_check<NewRecall>();
     chain.tags.forEach(prop => validate_prop(form, prop, errors));
     if (Object.entries(errors).length === 0) return {success: true, value: form as NewRecall};
     else return {success: false, errors};
