@@ -1,3 +1,8 @@
 import pg from 'pg';
 
-export default new pg.Pool({ connectionString: process.env.DB_STRING });
+export default new pg.Pool({ connectionString: process.env.DATABASE_URL,
+    // Heroku postgres
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
